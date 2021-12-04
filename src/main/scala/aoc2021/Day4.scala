@@ -1,11 +1,12 @@
 package aoc2021
 
+import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.io.Source
 
 object Day4 {
 
-  class Board(val field: Array[Array[Int]]){
+  class Board(val field: Array[Array[Int]]) {
     def isBingo: Boolean = {
       lazy val isRowBingo: Boolean = field.exists(_.forall(_ < 0))
       lazy val isColBingo: Boolean = field.indices.exists(colIdx => {
@@ -15,11 +16,11 @@ object Day4 {
     }
 
     def markNumber(num: Int): Unit = {
-      for{
+      for {
         i <- field.indices
         j <- field(i).indices
-      }yield {
-        if(field(i)(j) == num){
+      } yield {
+        if (field(i)(j) == num) {
           field(i)(j) = -1
         }
       }
@@ -30,47 +31,49 @@ object Day4 {
     }
   }
 
-  def getBingoResultWinStrategy(bingoNumbers: Array[Int], boards: mutable.Buffer[Day4.Board]): Int = {
-    bingoNumbers.foreach(num => {
+  @tailrec
+  def getBingoResultWinStrategy(bingoNumbers: List[Int], boards: Seq[Board]): Int = bingoNumbers match {
+    case Nil => -1
+    case num :: xs =>
       boards.foreach(_.markNumber(num))
-      boards.find(_.isBingo).foreach(bingoBoard => {
-        return bingoBoard.getUnmarkedSum * num
-      })
-    })
-    -1
+      val winnerBoard: Option[Board] = boards.find(_.isBingo)
+      winnerBoard match {
+        case None => getBingoResultWinStrategy(xs, boards)
+        case Some(b) => b.getUnmarkedSum * num
+      }
   }
 
-  def getBingoResultLoseStrategy(bingoNumbers: Array[Int], boards: mutable.Buffer[Day4.Board]): Int = {
-    var boardsLeft: Seq[Board] = boards.toSeq
-    bingoNumbers.foreach(num => {
-      boardsLeft.foreach(_.markNumber(num))
-      if(boardsLeft.forall(_.isBingo)){
-        return boardsLeft.head.getUnmarkedSum * num
-      }else{
-        boardsLeft = boardsLeft.filterNot(_.isBingo)
+  @tailrec
+  def getBingoResultLoseStrategy(bingoNumbers: List[Int], boards: Seq[Board]): Int = bingoNumbers match {
+    case Nil => -1
+    case num :: xs =>
+      boards.foreach(_.markNumber(num))
+      if (boards.forall(_.isBingo)) {
+        boards.head.getUnmarkedSum * num
+      } else {
+        getBingoResultLoseStrategy(xs, boards.filterNot(_.isBingo))
       }
-    })
-    -1
   }
 
   def main(args: Array[String]): Unit = {
     val inputLines = Source.fromResource("input2021_4.txt").getLines().toList
 
     val currentBoardLines: mutable.Buffer[String] = mutable.Buffer[String]()
-    val bingoNumbers: Array[Int] = inputLines.head.split(",").map(_.toInt)
+    val bingoNumbers: List[Int] = inputLines.head.split(",").map(_.toInt).toList
     val boards: mutable.Buffer[Board] = mutable.Buffer[Board]()
 
     inputLines.tail.tail.foreach(line => {
-      if(line.trim.isEmpty){
+      if (line.trim.isEmpty) {
         val boardFields = currentBoardLines.toArray.map(_.split(" ")
           .filter(_.nonEmpty).map(_.toInt))
         boards.append(new Board(boardFields))
         currentBoardLines.clear()
-      }else{
+      } else {
         currentBoardLines.append(line)
       }
     })
 
-    println(getBingoResultLoseStrategy(bingoNumbers, boards))
+    println(getBingoResultWinStrategy(bingoNumbers, boards.toSeq)) //10374
+    println(getBingoResultLoseStrategy(bingoNumbers, boards.toSeq)) //24742
   }
 }
