@@ -1,20 +1,20 @@
 package aoc2021
 
+import scala.annotation.tailrec
 import scala.io.Source
 
 object Day14 {
 
-  def producePolymer(template: String, rules: List[(String, Char)], iterations: Int): Map[Char, Long] = {
-    val rulesMap: Map[String, Char] = rules.toMap
+  def producePolymer(template: String, rules: Map[(Char, Char), Char], iterations: Int): Map[Char, Long] = {
 
-    def inner(pairsOccurrences: Map[(Char, Char), Long], iterationsLeft: Int): Map[(Char, Char), Long] = {
+    @tailrec
+    def calculateOccurrencesForPairsAfterIterations(pairsOccurrences: Map[(Char, Char), Long], iterationsLeft: Int): Map[(Char, Char), Long] = {
       if(iterationsLeft == 0){
         pairsOccurrences
       }else {
         val pairsOccurrencesAfterOneIteration: Map[(Char, Char), Long] = pairsOccurrences.toSeq.flatMap({
           case (pair, numOfOccurrences) =>
-            val pairAsStr: String = s"${pair._1}${pair._2}"
-            rulesMap.get(pairAsStr)
+            rules.get(pair)
               .map(insertionChar => {
                 Seq((pair._1, insertionChar) -> numOfOccurrences, (insertionChar, pair._2) -> numOfOccurrences)
               }).getOrElse(Seq(pair -> numOfOccurrences))
@@ -23,7 +23,7 @@ object Day14 {
           .mapValues(_.map(_._2).sum)
           .toMap
 
-        inner(pairsOccurrencesAfterOneIteration, iterationsLeft - 1)
+        calculateOccurrencesForPairsAfterIterations(pairsOccurrencesAfterOneIteration, iterationsLeft - 1)
       }
     }
 
@@ -33,7 +33,7 @@ object Day14 {
       .mapValues(_.size.toLong)
       .toMap
 
-    val charToNumOfOccurrencesInPairs = inner(pairs, iterations).toSeq.flatMap({
+    val charToNumOfOccurrencesInPairs = calculateOccurrencesForPairsAfterIterations(pairs, iterations).toSeq.flatMap({
       case ((start, end), num) => Seq(start -> num, end -> num)
     })
 
@@ -48,15 +48,15 @@ object Day14 {
     charFrequency.values.max - charFrequency.values.min
   }
 
-  def parseInput(filePath: String): (String, List[(String, Char)]) = {
+  def parseInput(filePath: String): (String, Map[(Char, Char), Char]) = {
     val lines = Source.fromResource(filePath).getLines().toList
 
     val template = lines.head
     val insertionRules = lines.filter(_.contains("->"))
       .map(line => {
         val Array(from, to) = line.split("->").map(_.trim)
-        (from, to.toCharArray.head)
-      })
+        ((from.head, from(1)), to.head)
+      }).toMap
 
     (template, insertionRules)
   }
