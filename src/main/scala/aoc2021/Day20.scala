@@ -8,7 +8,7 @@ object Day20 {
     val minRow = image.keySet.map(_._1).min
     val minCol = image.keySet.map(_._2).min
     val normalizedImage = image.map({
-      case ((i, j), c) => (i-minRow, j-minCol) -> c
+      case ((i, j), c) => (i - minRow, j - minCol) -> c
     })
 
     val maxRow = normalizedImage.keySet.map(_._1).max
@@ -27,10 +27,10 @@ object Day20 {
     val key = lines.head
 
     val grid = lines.tail.tail.map(_.toCharArray).toArray
-    val image = (for{
+    val image = (for {
       i <- grid.indices
       j <- grid(i).indices
-    }yield{
+    } yield {
       (i, j) -> grid(i)(j)
     }).toMap
     (key, image)
@@ -46,25 +46,26 @@ object Day20 {
     val rowsRangeForKernel: Range = rows.min - 1 to rows.max + 1
     val colsRangeForKernel: Range = cols.min - 1 to cols.max + 1
 
-    val pixelOutOfImageRange: Char =  (key.head, key.last) match {
+    val pixelOutOfImageRange: Char = (key.head, key.last) match {
       case ('.', _) => '.' // applying a kernel on 9 '.' gives a '.' so nothing changes when we apply it infinitely
-      case ('#', '#') => '#' // applying a kernel on 9 '#' gives a '#' so nothing changes when we apply it infinitely
-      case ('#', '.') => if(iterationNumber%2 == 0) '.' else '#' // a square of 9 '.' produces a '#' and vice versa so if applied to infinity, it changes each iteration
+      case ('#', '#') => if(iterationNumber == 0) '.' else '#' // after first iteration 9 '.' turn into 9 '#' and they remain stable after that
+      case ('#', '.') => if (iterationNumber % 2 == 0) '.' else '#' // a square of 9 '.' produces a '#' and vice versa so if applied to infinity, it changes each iteration
     }
 
     (for {
       i <- rowsRangeForKernel
       j <- colsRangeForKernel
-    }yield{
-      val subImageFlattened: String = Seq((i-1, j-1), (i-1, j), (i-1, j+1), (i, j-1), (i,j), (i, j+1), (i+1, j-1), (i+1, j), (i+1, j+1))
-        .map(pos => {
-          if(rowsRange.contains(pos._1) && colsRange.contains(pos._2)){
-            image.getOrElse(pos, '.')
-          }else{
-            pixelOutOfImageRange
-          }
-        })
-        .mkString
+    } yield {
+      val subImageFlattened: String = (for {
+        neighborI <- Seq(i - 1, i, i + 1)
+        neighborJ <- Seq(j - 1, j, j + 1)
+      } yield {
+        if (rowsRange.contains(neighborI) && colsRange.contains(neighborJ)) {
+          image.getOrElse((neighborI, neighborJ), '.')
+        } else {
+          pixelOutOfImageRange
+        }
+      }).mkString
 
       val keyIndex: Int = Integer.parseInt(subImageFlattened.replaceAll("\\.", "0").replaceAll("#", "1"), 2)
       val resultPixel: Char = key(keyIndex)
@@ -72,25 +73,25 @@ object Day20 {
     }).toMap
   }
 
-  def processImage(image: Map[(Int, Int), Char], key: String, convolutionRuns: Int, currentIterationNum: Int = 0): Map[(Int, Int), Char] = {
-//    printImage(image)
-    if(convolutionRuns == 0){
+  def processImage(image: Map[(Int, Int), Char], key: String, iterationsToRun: Int, currentIterationNum: Int = 0): Map[(Int, Int), Char] = {
+    //    printImage(image)
+    if (iterationsToRun == 0) {
       image
-    }else{
+    } else {
       val processed = applyKernel(image, key, currentIterationNum)
-      processImage(processed, key, convolutionRuns-1, currentIterationNum + 1)
+      processImage(processed, key, iterationsToRun - 1, currentIterationNum + 1)
     }
   }
 
   def main(args: Array[String]): Unit = {
     val (keyTest, imageTest) = parseInput("input_2021_20_test.txt")
 
-    val processedImageTest = processImage(image = imageTest, key = keyTest, convolutionRuns = 50)
+    val processedImageTest = processImage(image = imageTest, key = keyTest, iterationsToRun = 50)
     println(processedImageTest.values.count(_ == '#'))
 
     val (key, image) = parseInput("input_2021_20.txt")
 
-    val processedImage = processImage(image = image, key = key, convolutionRuns = 50)
+    val processedImage = processImage(image = image, key = key, iterationsToRun = 50)
     println(processedImage.values.count(_ == '#'))
   }
 }
