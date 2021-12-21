@@ -83,20 +83,20 @@ object Day21 {
       case (sum, numOfUniverses) =>
         val currPlayerCopy = (if(playerIdx==0) player1 else player2).copy()
         currPlayerCopy.move(sum)
-        if(currPlayerCopy.score >= 21){
+        val numOfWinsWithCurrentMove: (Long, Long) = if(currPlayerCopy.score >= 21){
           if(playerIdx == 0){
-            (numOfUniverses, 0L)
+            (1L, 0L)
           }else{
-            (0L, numOfUniverses)
+            (0L, 1L)
           }
         }else{
-          val res = if(playerIdx == 0) {
+         if(playerIdx == 0) {
             playGameQuantum(currPlayerCopy, player2, (playerIdx + 1) % 2)
           } else {
             playGameQuantum(player1, currPlayerCopy, (playerIdx + 1) % 2)
           }
-          (res._1 * numOfUniverses, res._2 * numOfUniverses)
         }
+        (numOfWinsWithCurrentMove._1 * numOfUniverses, numOfWinsWithCurrentMove._2 * numOfUniverses)
     }).reduce((x,y) => (x._1 + y._1, x._2 + y._2))
   }
 
