@@ -1,29 +1,29 @@
 package aoc2021
 
-import scala.io.Source
+import scala.annotation.tailrec
 
 object Day20 {
 
-  def printImage(image: Map[(Int, Int), Char]): Unit = {
-    val minRow = image.keySet.map(_._1).min
-    val minCol = image.keySet.map(_._2).min
-    val normalizedImage = image.map({
-      case ((i, j), c) => (i - minRow, j - minCol) -> c
-    })
+//  def printImage(image: Map[(Int, Int), Char]): Unit = {
+//    val minRow = image.keySet.map(_._1).min
+//    val minCol = image.keySet.map(_._2).min
+//    val normalizedImage = image.map({
+//      case ((i, j), c) => (i - minRow, j - minCol) -> c
+//    })
+//
+//    val maxRow = normalizedImage.keySet.map(_._1).max
+//    val maxCol = normalizedImage.keySet.map(_._2).max
+//    val grid = (0 to maxRow).map(row => {
+//      (0 to maxCol).map(col => normalizedImage((row, col))).toArray
+//    }).toArray
+//
+//    println("---------------")
+//    println(grid.map(_.mkString("Array(", ", ", ")")).mkString("\n"))
+//    println("---------------")
+//  }
 
-    val maxRow = normalizedImage.keySet.map(_._1).max
-    val maxCol = normalizedImage.keySet.map(_._2).max
-    val grid = (0 to maxRow).map(row => {
-      (0 to maxCol).map(col => normalizedImage((row, col))).toArray
-    }).toArray
-
-    println("---------------")
-    println(grid.map(_.mkString("Array(", ", ", ")")).mkString("\n"))
-    println("---------------")
-  }
-
-  def parseInput(filePath: String): (String, Map[(Int, Int), Char]) = {
-    val lines = Source.fromResource(filePath).getLines().toList
+  def parseInput(isTest: Boolean = false): (String, Map[(Int, Int), Char]) = {
+    val lines = readFileLines[String](20, isTest = isTest)
     val key = lines.head
 
     val grid = lines.tail.tail.map(_.toCharArray).toArray
@@ -73,6 +73,7 @@ object Day20 {
     }).toMap
   }
 
+  @tailrec
   def processImage(image: Map[(Int, Int), Char], key: String, iterationsToRun: Int, currentIterationNum: Int = 0): Map[(Int, Int), Char] = {
     //    printImage(image)
     if (iterationsToRun == 0) {
@@ -84,12 +85,12 @@ object Day20 {
   }
 
   def main(args: Array[String]): Unit = {
-    val (keyTest, imageTest) = parseInput("aoc2021/input_20_test.txt")
+    val (keyTest, imageTest) = parseInput(isTest = true)
 
     val processedImageTest = processImage(image = imageTest, key = keyTest, iterationsToRun = 50)
     println(processedImageTest.values.count(_ == '#'))
 
-    val (key, image) = parseInput("aoc2021/input_20.txt")
+    val (key, image) = parseInput()
 
     val processedImage = processImage(image = image, key = key, iterationsToRun = 50)
     println(processedImage.values.count(_ == '#'))

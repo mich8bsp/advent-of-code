@@ -1,7 +1,5 @@
 package aoc2021
 
-import scala.io.Source
-
 object Day25 {
 
   def getEastHerdMovements(grid: Array[Array[Char]]): Seq[((Int, Int), (Int, Int))] = {
@@ -69,14 +67,10 @@ object Day25 {
     steps
   }
 
-  def parseInput(filePath: String): Array[Array[Char]] = {
-    Source.fromResource(filePath).getLines().toArray.map(_.toCharArray)
-  }
-
   def main(args: Array[String]): Unit = {
-    val gridTest = parseInput("aoc2021/input_25_test.txt")
+    val gridTest = readCharGrid(25, isTest = true)
     println(simulate(gridTest))
-    val grid = parseInput("aoc2021/input_25.txt")
+    val grid = readCharGrid(25)
     println(simulate(grid))
   }
 }

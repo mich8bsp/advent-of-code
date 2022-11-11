@@ -1,7 +1,5 @@
 package aoc2021
 
-import scala.io.Source
-
 object Day13 {
 
   def foldOrigami(points: Set[(Int, Int)], operations: List[(String, Int)]): Set[(Int, Int)] = {
@@ -28,8 +26,8 @@ object Day13 {
     pointsOnFolded
   }
 
-  private def parseInput(filePath: String): (Set[(Int, Int)], List[(String, Int)]) = {
-    val lines = Source.fromResource(filePath).getLines().toList
+  private def parseInput(isTest: Boolean = false): (Set[(Int, Int)], List[(String, Int)]) = {
+    val lines = readFileLines[String](13, isTest = isTest)
     val points = lines.filter(_.nonEmpty).filterNot(_.contains("fold along"))
       .map(line => {
         val Array(x,y) = line.split(",")
@@ -62,11 +60,11 @@ object Day13 {
   }
 
   def main(args: Array[String]): Unit = {
-    val (pointsTest, operationsTest) = parseInput("aoc2021/input_13_test.txt")
+    val (pointsTest, operationsTest) = parseInput(isTest = true)
 
     println(foldOrigami(pointsTest, operationsTest.take(1)).size)
 
-    val (points, operations) = parseInput("aoc2021/input_13.txt")
+    val (points, operations) = parseInput()
 
     println(foldOrigami(points, operations.take(1)).size)
 

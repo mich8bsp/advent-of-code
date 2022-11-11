@@ -1,7 +1,6 @@
 package aoc2021
 
 import scala.collection.mutable
-import scala.io.Source
 
 object Day16 {
 
@@ -153,13 +152,9 @@ object Day16 {
     }
   }
 
-  def parseInput(filePath: String): List[Array[Char]] = {
-    Source.fromResource(filePath).getLines().toList.map(_.toCharArray)
-  }
-
 
   def main(args: Array[String]): Unit = {
-    val transmissions = parseInput("aoc2021/input_16.txt")
+    val transmissions = readCharGrid(16)
 
     transmissions.foreach(transmission => {
       println(countTransmissionVersions(parseTransmission(transmission)))

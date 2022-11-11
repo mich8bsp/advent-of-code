@@ -1,6 +1,5 @@
 package aoc2021
 
-import scala.io.Source
 import scala.util.{Success, Try}
 
 object Day18 {
@@ -201,7 +200,7 @@ object Day18 {
   def parseSnailNumber(line: String, depth: Int = 0): SnailNumber = {
     Try(line.toInt) match {
       case Success(n) => new RegularSnailNumber(n, depth)
-      case _ => {
+      case _ =>
         (0 until line.length).foreach(i => {
           if (line(i) == ',') {
             val leftStr: String = line.slice(1, i).trim
@@ -217,28 +216,27 @@ object Day18 {
           }
         })
         throw new Exception("wtf")
-      }
     }
   }
 
 
-  def parseInput(filePath: String): List[SnailNumber] = {
-    Source.fromResource(filePath).getLines().toList.map(parseSnailNumber(_))
+  def parseInput(isTest: Boolean = false): List[SnailNumber] = {
+    readFileLines(18, isTest = isTest)(parseSnailNumber(_))
   }
 
   def calculateSumMagnitude(): Unit = {
-    val numbersTest = parseInput("aoc2021/input_18_test.txt")
+    val numbersTest = parseInput(isTest = true)
     println(sumNumbers(numbersTest).magnitude)
 
-    val numbers = parseInput("aoc2021/input_18.txt")
+    val numbers = parseInput()
     println(sumNumbers(numbers).magnitude)
   }
 
   def calculateLargestPairSumMagnitude(): Unit = {
-    val getNumbersTest = () => parseInput("aoc2021/input_18_test.txt")
+    val getNumbersTest = () => parseInput(isTest = true)
     println(getLargestPairSumMagnitude(getNumbersTest))
 
-    val getNumbers = () => parseInput("aoc2021/input_18.txt")
+    val getNumbers = () => parseInput()
     println(getLargestPairSumMagnitude(getNumbers))
   }
 

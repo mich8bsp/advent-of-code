@@ -1,12 +1,11 @@
 package aoc2021
 
 import scala.collection.mutable
-import scala.io.Source
 
 object Day17 {
 
-  def parseInput(filePath: String): (Range, Range) = {
-    val line = Source.fromResource(filePath).getLines().next().split(":")(1).trim
+  def parseInput(isTest: Boolean = false): (Range, Range) = {
+    val line = readFileLines[String](17, isTest = isTest).head.split(":")(1).trim
     val x = line.split(",").head.split("=")(1).split("\\.\\.").map(_.toInt)
     val y = line.split(",")(1).split("=")(1).split("\\.\\.").map(_.toInt)
 
@@ -51,10 +50,10 @@ object Day17 {
   }
 
   def main(args: Array[String]): Unit = {
-    val (xRangeTest, yRangeTest) = parseInput("aoc2021/input_17_test.txt")
+    val (xRangeTest, yRangeTest) = parseInput(isTest = true)
     println(getMaxAmplitudeOfShotToTarget((xRangeTest, yRangeTest))) //45
 
-    val (xRange, yRange) = parseInput("aoc2021/input_17.txt")
+    val (xRange, yRange) = parseInput()
     println(getMaxAmplitudeOfShotToTarget((xRange, yRange))) //5671
 
     println(getValidInitialVelocities((xRangeTest, yRangeTest)).size) //112

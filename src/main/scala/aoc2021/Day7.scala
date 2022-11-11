@@ -19,13 +19,13 @@ object Day7 {
 
 
   def main(args: Array[String]): Unit = {
-    var positions = Source.fromResource("aoc2021/input_7_test.txt").getLines().mkString.split(",").map(_.toInt).toList
+    var positions = readFileLines[List[Int]](7, isTest = true).flatten
 
     val constCostFunction = (distance: Int) => distance
     val rampCostFunction = (distance: Int) => (1 + distance) * distance / 2
     println(calculateAlignmentCost(positions)(constCostFunction))
 
-    positions = Source.fromResource("aoc2021/input_7.txt").getLines().mkString.split(",").map(_.toInt).toList
+    positions = readFileLines[List[Int]](7).flatten
 
     println(calculateAlignmentCost(positions)(rampCostFunction))
 

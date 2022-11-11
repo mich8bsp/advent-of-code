@@ -2,7 +2,6 @@ package aoc2021
 
 import scala.annotation.tailrec
 import scala.collection.mutable
-import scala.io.Source
 
 object Day4 {
 
@@ -56,7 +55,7 @@ object Day4 {
   }
 
   def main(args: Array[String]): Unit = {
-    val inputLines = Source.fromResource("aoc2021/input_4.txt").getLines().toList
+    val inputLines = readFileLines[String](4)
 
     val currentBoardLines: mutable.Buffer[String] = mutable.Buffer[String]()
     val bingoNumbers: List[Int] = inputLines.head.split(",").map(_.toInt).toList

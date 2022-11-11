@@ -1,7 +1,6 @@
 package aoc2021
 
 import scala.collection.mutable
-import scala.io.Source
 
 object Day15 {
 
@@ -45,11 +44,6 @@ object Day15 {
     aStar(start = (0, 0), goal = (sideLength-1, sideLength-1))
   }
 
-  def parseInput(filePath: String): Array[Array[Int]] = {
-    Source.fromResource(filePath).getLines().toArray
-      .map(_.toArray.map(_.asDigit))
-  }
-
   def expandGrid(grid: Array[Array[Int]]): Array[Array[Int]] = {
     val sideLength: Int = grid.length
     (0 until sideLength*5).map(row => {
@@ -65,11 +59,11 @@ object Day15 {
   }
 
   def main(args: Array[String]): Unit = {
-    val testGrid = parseInput("aoc2021/input_15_test.txt")
+    val testGrid = readDigitsGrid(15, isTest = true)
 
     println(findLowestTotalRisk(testGrid)) // 40
 
-    val grid = parseInput("aoc2021/input_15.txt")
+    val grid = readDigitsGrid(15)
 
     println(findLowestTotalRisk(grid)) // 415
 

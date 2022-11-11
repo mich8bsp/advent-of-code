@@ -1,7 +1,6 @@
 package aoc2021
 
 import scala.collection.mutable
-import scala.io.Source
 
 object Day24 {
 
@@ -90,37 +89,6 @@ object Day24 {
   }
 
   class Monad(val alu: ALU, instructions: List[String]) {
-    val optimizedInstructions = optimize(instructions)
-
-    def optimize(unoptimizedInstructions: List[String]): List[String] = {
-      val optimized = mutable.Buffer[String]()
-      var i = 0
-      while (i < unoptimizedInstructions.length) {
-        val splitInstruction = unoptimizedInstructions(i).split(" ")
-        if (splitInstruction.head != "div" || splitInstruction(2) != "1") {
-          if (i < unoptimizedInstructions.length - 1) {
-            val nextSplit = unoptimizedInstructions(i + 1).split(" ")
-            if (splitInstruction.head == "eql" && nextSplit.head == "eql" &&
-              splitInstruction(1) == nextSplit(1) && nextSplit(2) == "0") {
-              optimized.addOne(s"neq ${splitInstruction(1)} ${splitInstruction(2)}")
-              i += 1
-            } else if (splitInstruction.head == "mul" && splitInstruction(2) == "0" &&
-              nextSplit.head == "add" && nextSplit(1) == splitInstruction(1)) {
-              optimized.addOne(s"ass ${nextSplit(1)} ${nextSplit(2)}")
-              i += 1
-            } else {
-              optimized.addOne(unoptimizedInstructions(i))
-            }
-          } else {
-            optimized.addOne(unoptimizedInstructions(i))
-          }
-        }
-
-        i += 1
-      }
-
-      optimized.toList
-    }
 
     def splitProgram(instructions: List[String]): List[List[String]] = {
       val indexOfNext = instructions.indexWhere(_.startsWith("inp"), 1)
@@ -145,7 +113,7 @@ object Day24 {
 
 
   def main(args: Array[String]): Unit = {
-    val monadInstructions: List[String] = Source.fromResource("aoc2021/input_24.txt").getLines().toList
+    val monadInstructions: List[String] = readFileLines[String](24)
 
     val monad = new Monad(new ALU, monadInstructions)
 

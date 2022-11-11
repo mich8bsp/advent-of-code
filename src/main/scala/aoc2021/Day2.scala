@@ -1,7 +1,5 @@
 package aoc2021
 
-import scala.io.Source
-
 object Direction extends Enumeration {
   val UP, DOWN, FORWARD = Value
 }
@@ -28,7 +26,7 @@ object Day2 {
   }
 
   def main(args: Array[String]): Unit = {
-    val commands = Source.fromResource("aoc2021/input_2.txt").getLines().toList
+    val commands = readFileLines[String](2)
       .map(line => {
         val Array(dirStr, stepsStr) = line.split(" ")
         Command(

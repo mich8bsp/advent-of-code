@@ -1,13 +1,8 @@
 package aoc2021
 
 import scala.collection.mutable
-import scala.io.Source
 
 object Day11 {
-
-  def parseInput(lines: List[String]): Array[Array[Int]] = {
-    lines.map(_.toCharArray.map(_.asDigit)).toArray
-  }
 
   def stepIncrement(grid: Array[Array[Int]]): Unit = {
     for{
@@ -92,15 +87,15 @@ object Day11 {
   }
 
   def main(args: Array[String]): Unit = {
-    var testGrid = parseInput(Source.fromResource("aoc2021/input_11_test.txt").getLines().toList)
+    var testGrid = readDigitsGrid(11, isTest = true)
     println(getNumberOfFlashes(testGrid, steps = 100))
 
-    var grid = parseInput(Source.fromResource("aoc2021/input_11.txt").getLines().toList)
+    var grid = readDigitsGrid(11)
 
     println(getNumberOfFlashes(grid, steps = 100))
 
-    testGrid = parseInput(Source.fromResource("aoc2021/input_11_test.txt").getLines().toList)
-    grid = parseInput(Source.fromResource("aoc2021/input_11.txt").getLines().toList)
+    testGrid = readDigitsGrid(11, isTest = true)
+    grid = readDigitsGrid(11)
 
     println(getFirstSynchronizedStep(testGrid))
     println(getFirstSynchronizedStep(grid))

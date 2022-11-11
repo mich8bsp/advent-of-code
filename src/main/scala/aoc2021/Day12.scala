@@ -7,8 +7,8 @@ object Day12 {
 
   case class Cave(id: String, neighbors: mutable.Set[Cave] = mutable.Set[Cave]())
 
-  private def parseInput(filePath: String): Cave = {
-    val lines = Source.fromResource(filePath).getLines().toList
+  private def parseInput(isTest: Boolean = false): Cave = {
+    val lines = readFileLines[String](12, isTest = isTest)
     val connections: Seq[(String, String)] = lines.map(_.split("-")).map(x => x.head -> x(1))
 
     val caves: Map[String, Cave] = (connections.map(_._1) ++ connections.map(_._2)).toSet[String].map(x => x -> Cave(x)).toMap
@@ -75,9 +75,9 @@ object Day12 {
   }
 
   def main(args: Array[String]): Unit = {
-    val cavesTest = parseInput("aoc2021/input_12_test.txt")
+    val cavesTest = parseInput(isTest = true)
     println(countCavePaths(cavesTest))
-    val caves = parseInput("aoc2021/input_12.txt")
+    val caves = parseInput()
     println(countCavePaths(caves))
 
     println(countCavePaths2(cavesTest))

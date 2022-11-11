@@ -1,7 +1,6 @@
 package aoc2021
 
 import scala.collection.mutable
-import scala.io.Source
 import scala.util.Try
 
 object Day10 {
@@ -71,10 +70,10 @@ object Day10 {
   }
 
   def main(args: Array[String]): Unit = {
-    val testLines = Source.fromResource("aoc2021/input_10_test.txt").getLines().toList
+    val testLines = readFileLines[String](10, isTest = true)
     println(getSyntaxErrorScore(testLines))
 
-    val lines = Source.fromResource("aoc2021/input_10.txt").getLines().toList
+    val lines = readFileLines[String](10)
 
     println(getSyntaxErrorScore(lines))
 

@@ -158,8 +158,8 @@ object Day19 {
     new Scanner(id, reports)
   }
 
-  def parseInput(filePath: String): List[Scanner] = {
-    val lines = Source.fromResource(filePath).getLines().toList
+  def parseInput(isTest: Boolean = false): List[Scanner] = {
+    val lines = readFileLines[String](19, isTest = isTest)
 
     var leftToSplit = lines
     val scannersParsed: mutable.Buffer[Scanner] = mutable.Buffer[Scanner]()
@@ -179,12 +179,12 @@ object Day19 {
   }
 
   def main(args: Array[String]): Unit = {
-    val scannersTest: List[Scanner] = parseInput("aoc2021/input_19_test.txt")
+    val scannersTest: List[Scanner] = parseInput(isTest = true)
     resolveScannerLocations(scannersTest)
     println(scannersTest.flatMap(_.getAbsoluteCoordinateReports).toSet.size)
     println(getMaxManhattanDistance(scannersTest))
 
-    val scanners: List[Scanner] = parseInput("aoc2021/input_19.txt")
+    val scanners: List[Scanner] = parseInput()
     resolveScannerLocations(scanners)
     println(scanners.flatMap(_.getAbsoluteCoordinateReports).toSet.size)
     println(getMaxManhattanDistance(scanners))

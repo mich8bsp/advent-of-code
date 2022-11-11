@@ -1,7 +1,6 @@
 package aoc2021
 
 import scala.collection.mutable
-import scala.io.Source
 
 object Day5 {
   private def findSegmentsIntersection(
@@ -112,7 +111,7 @@ object Day5 {
   }
 
   def main(args: Array[String]): Unit = {
-    val lines: List[Line] = Source.fromResource("aoc2021/input_5.txt").getLines().toList
+    val lines: List[Line] = readFileLines[String](5)
       .filter(_.nonEmpty)
       .map(x => {
         val Array(startStr, endStr) = x.split("->").map(_.trim)

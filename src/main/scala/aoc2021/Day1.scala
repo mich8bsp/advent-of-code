@@ -1,7 +1,5 @@
 package aoc2021
 
-import scala.io.Source
-
 object Day1 {
 
   def groupByThree(readings: List[Int]): List[Int] = {
@@ -17,7 +15,7 @@ object Day1 {
   }
 
   def main(args: Array[String]): Unit = {
-    val readings = Source.fromResource("aoc2021/input_1.txt").getLines().map(_.toInt).toList
+    val readings = readFileLines[Int](1)
     println(calculateIncreases(readings)) //1342
 
     println(calculateIncreases(groupByThree(readings))) //1378

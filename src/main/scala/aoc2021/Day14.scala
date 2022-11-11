@@ -1,7 +1,6 @@
 package aoc2021
 
 import scala.annotation.tailrec
-import scala.io.Source
 
 object Day14 {
 
@@ -48,8 +47,8 @@ object Day14 {
     charFrequency.values.max - charFrequency.values.min
   }
 
-  def parseInput(filePath: String): (String, Map[(Char, Char), Char]) = {
-    val lines = Source.fromResource(filePath).getLines().toList
+  def parseInput(isTest: Boolean = false): (String, Map[(Char, Char), Char]) = {
+    val lines = readFileLines[String](14, isTest = isTest)
 
     val template = lines.head
     val insertionRules = lines.filter(_.contains("->"))
@@ -62,14 +61,14 @@ object Day14 {
   }
 
   def main(args: Array[String]): Unit = {
-    val (templateTest, rulesTest) = parseInput("aoc2021/input_14_test.txt")
+    val (templateTest, rulesTest) = parseInput(isTest = true)
 
     val testPolymer10 = producePolymer(templateTest, rulesTest, 10)
     val testPolymer40 = producePolymer(templateTest, rulesTest, 40)
     println(getPolymerFrequencyDiff(testPolymer10))
     println(getPolymerFrequencyDiff(testPolymer40))
 
-    val (template, rules) = parseInput("aoc2021/input_14.txt")
+    val (template, rules) = parseInput()
 
     val polymer10 = producePolymer(template, rules, 10)
     val polymer40 = producePolymer(template, rules, 40)

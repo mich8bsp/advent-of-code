@@ -1,25 +1,23 @@
 package aoc2021
 
 import scala.collection.mutable
-import scala.io.Source
 
 object Day22 {
 
-  def parseInput(filePath: String): List[((Int, Int), (Int, Int), (Int, Int), Boolean)] = {
+  def parseInput(isTest: Boolean = false): List[((Int, Int), (Int, Int), (Int, Int), Boolean)] = {
     def parseRange(rangeStr: String): (Int, Int) = {
       val cleanRangeSplit = rangeStr.split("=")(1).split("\\.\\.")
       (cleanRangeSplit.head.toInt, cleanRangeSplit(1).toInt)
     }
 
-    Source.fromResource(filePath).getLines().toList
-      .map(line => {
-        val Array(isOn, range) = line.split(" ")
-        val xRange = parseRange(range.split(",").head)
-        val yRange = parseRange(range.split(",")(1))
-        val zRange = parseRange(range.split(",")(2))
+    readFileLines[((Int, Int), (Int, Int), (Int, Int), Boolean)](22, isTest = isTest) { line =>
+      val Array(isOn, range) = line.split(" ")
+      val xRange = parseRange(range.split(",").head)
+      val yRange = parseRange(range.split(",")(1))
+      val zRange = parseRange(range.split(",")(2))
 
-        (xRange, yRange, zRange, isOn == "on")
-      })
+      (xRange, yRange, zRange, isOn == "on")
+    }
   }
 
   case class Cube(xRange: (Int, Int), yRange: (Int, Int), zRange: (Int, Int)){
@@ -121,7 +119,7 @@ object Day22 {
 
 
   def main(args: Array[String]): Unit = {
-    val stepsTest = parseInput("aoc2021/input_22_test.txt")
+    val stepsTest = parseInput(isTest = true)
     val initializationArea = (-50, 50)
 
     val stepsTestInInitialization = stepsTest.filter(x =>
@@ -132,7 +130,7 @@ object Day22 {
     println(countOnCubesAfterSteps(stepsTestInInitialization)) //474140
     println(countOnCubesAfterSteps(stepsTest)) //2758514936282235
 
-    val steps = parseInput("aoc2021/input_22.txt")
+    val steps = parseInput()
 
     val stepsInInitialization = steps.filter(x =>
       findSegmentsIntersection(x._1, initializationArea).nonEmpty &&

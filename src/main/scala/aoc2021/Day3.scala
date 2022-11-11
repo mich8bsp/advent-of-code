@@ -65,7 +65,7 @@ object Day3 {
   }
 
   def main(args: Array[String]): Unit = {
-    val diagnostics = Source.fromResource("aoc2021/input_3.txt").getLines().toList
+    val diagnostics = readFileLines[String](3)
     println(getGammaRate(diagnostics) * getEpsilonRate(diagnostics))
 
     println(getOxygenGeneratorRating(diagnostics) * getCo2ScrubberRating(diagnostics))

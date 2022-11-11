@@ -1,12 +1,11 @@
 package aoc2021
 
 import scala.collection.mutable
-import scala.io.Source
 
 object Day23 {
 
   class Board(arr: Array[Array[Char]]) {
-    val posCantStopOn = Seq((1, 3), (1, 5), (1, 7), (1, 9))
+    private val posCantStopOn = Seq((1, 3), (1, 5), (1, 7), (1, 9))
     val destinationByAmphipod: Map[Char, Seq[(Int, Int)]] = Map(
       'A' -> (2 until arr.length - 1).map(row => (row, 3)),
       'B' -> (2 until arr.length - 1).map(row => (row, 5)),
@@ -86,7 +85,7 @@ object Day23 {
     }) * steps
   }
 
-  val cache = mutable.Map[Map[(Int, Int), Char], Long]()
+  private val cache = mutable.Map[Map[(Int, Int), Char], Long]()
 
   def organizeAmphipods(board: Board, amphipodPositions: Map[(Int, Int), Char]): Long = {
     cache.getOrElseUpdate(amphipodPositions, {
@@ -118,13 +117,13 @@ object Day23 {
     })
   }
 
-  def parseInput(filePath: String): (Board, Map[(Int, Int), Char]) = {
-    val lines = Source.fromResource(filePath).getLines().toList
+  def parseInput(isTest: Boolean = false): (Board, Map[(Int, Int), Char]) = {
+    val lines = readFileLines[String](23, isTest = isTest)
     parseInput(lines)
   }
 
-  def parseInputUnfolded(filePath: String): (Board, Map[(Int, Int), Char]) = {
-    val lines = Source.fromResource(filePath).getLines().toList
+  def parseInputUnfolded(isTest: Boolean = false): (Board, Map[(Int, Int), Char]) = {
+    val lines = readFileLines[String](23, isTest = isTest)
     val unfoldedLines = lines.take(3) ++ List(
       "  #D#C#B#A#  ",
       "  #D#B#A#C#  "
@@ -151,19 +150,19 @@ object Day23 {
   }
 
   def main(args: Array[String]): Unit = {
-    val (boardTest, initPositionsTest) = parseInput("aoc2021/input_23_test.txt")
+    val (boardTest, initPositionsTest) = parseInput(isTest = true)
 
     println(organizeAmphipods(boardTest, initPositionsTest))
 
-    val (board, initPositions) = parseInput("aoc2021/input_23.txt")
+    val (board, initPositions) = parseInput()
 
     println(organizeAmphipods(board, initPositions))
 
-    val (boardTestUnfolded, initPositionsTestUnfolded) = parseInputUnfolded("aoc2021/input_23_test.txt")
+    val (boardTestUnfolded, initPositionsTestUnfolded) = parseInputUnfolded(isTest = true)
 
     println(organizeAmphipods(boardTestUnfolded, initPositionsTestUnfolded))
 
-    val (boardUnfolded, initPositionsUnfolded) = parseInputUnfolded("aoc2021/input_23.txt")
+    val (boardUnfolded, initPositionsUnfolded) = parseInputUnfolded()
 
     println(organizeAmphipods(boardUnfolded, initPositionsUnfolded))
   }

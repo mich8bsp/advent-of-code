@@ -1,7 +1,5 @@
 package aoc2021
 
-import scala.io.Source
-
 object Day8 {
 
   def decodeDigits(combinations: Array[String]): Map[Set[Char], Int] = {
@@ -12,30 +10,30 @@ object Day8 {
     // 6 is 0 or 6 or 9
     // 7 is 8
 
-    val signalsInOne: Set[Char] = combinations.find(_.size == 2).get.toCharArray.toSet
-    val signalsInSeven: Set[Char] = combinations.find(_.size == 3).get.toCharArray.toSet
-    val signalsInFour: Set[Char] = combinations.find(_.size == 4).get.toCharArray.toSet
-    val signalsInEight: Set[Char] = combinations.find(_.size == 7).get.toCharArray.toSet
+    val signalsInOne: Set[Char] = combinations.find(_.length == 2).get.toCharArray.toSet
+    val signalsInSeven: Set[Char] = combinations.find(_.length == 3).get.toCharArray.toSet
+    val signalsInFour: Set[Char] = combinations.find(_.length == 4).get.toCharArray.toSet
+    val signalsInEight: Set[Char] = combinations.find(_.length == 7).get.toCharArray.toSet
 
     val topLeftAndMiddle: Set[Char] = signalsInFour -- signalsInOne
 
-    val signalsInFive: Set[Char] = combinations.filter(_.size == 5).map(_.toCharArray.toSet)
+    val signalsInFive: Set[Char] = combinations.filter(_.length == 5).map(_.toCharArray.toSet)
       .filter(x => topLeftAndMiddle.subsetOf(x)).head
-    val signalsInThree: Set[Char] = combinations.filter(_.size == 5).map(_.toCharArray.toSet)
+    val signalsInThree: Set[Char] = combinations.filter(_.length == 5).map(_.toCharArray.toSet)
       .filter(x => signalsInOne.subsetOf(x)).head
-    val signalsInTwo: Set[Char] = combinations.filter(_.size == 5).map(_.toCharArray.toSet)
+    val signalsInTwo: Set[Char] = combinations.filter(_.length == 5).map(_.toCharArray.toSet)
       .filterNot(_ == signalsInThree)
       .filterNot(_ == signalsInFive).head
 
-    val signalsInNine: Set[Char] = combinations.filter(_.size == 6).map(_.toCharArray.toSet)
+    val signalsInNine: Set[Char] = combinations.filter(_.length == 6).map(_.toCharArray.toSet)
       .filter(x => signalsInFive.subsetOf(x))
       .filter(x => signalsInOne.subsetOf(x)).head
 
-    val signalsInZero: Set[Char] = combinations.filter(_.size == 6).map(_.toCharArray.toSet)
+    val signalsInZero: Set[Char] = combinations.filter(_.length == 6).map(_.toCharArray.toSet)
       .filterNot(_ == signalsInNine)
       .filter(x => signalsInOne.subsetOf(x)).head
 
-    val signalsInSix: Set[Char] = combinations.filter(_.size == 6).map(_.toCharArray.toSet)
+    val signalsInSix: Set[Char] = combinations.filter(_.length == 6).map(_.toCharArray.toSet)
       .filterNot(_ == signalsInNine)
       .filterNot(_ == signalsInZero).head
 
@@ -70,22 +68,22 @@ object Day8 {
       .toInt
   }
 
-  def parseInput(filePath: String): Seq[(Array[String], Array[String])] = {
-    val lines = Source.fromResource(filePath).getLines()
+  def parseInput(isTest: Boolean = false): Seq[(Array[String], Array[String])] = {
+    val lines = readFileLines[String](8, isTest = isTest)
     lines.map(line => {
       val Array(digitCombinations, outputValues) = line.split("\\|").map(_.split(" ").filter(_.nonEmpty))
       (digitCombinations, outputValues)
-    }).toList
+    })
   }
 
   def part1(): Unit ={
-    var entries = parseInput("aoc2021/input_8_test.txt")
+    var entries = parseInput(isTest = true)
     var res = entries.map(entry => {
       countDigitsOfInterest(entry._1, entry._2, digitsToCount = Set(1,4,7,8))
     }).sum
     println(res)
 
-    entries = parseInput("aoc2021/input_8.txt")
+    entries = parseInput()
     res = entries.map(entry => {
       countDigitsOfInterest(entry._1, entry._2, digitsToCount = Set(1,4,7,8))
     }).sum
@@ -96,13 +94,13 @@ object Day8 {
   }
 
   def part2(): Unit = {
-    var entries = parseInput("aoc2021/input_8_test.txt")
+    var entries = parseInput(isTest = true)
     var res = entries.map(entry => {
       decodeOutput(entry._1, entry._2)
     }).sum
     println(res)
 
-    entries = parseInput("aoc2021/input_8.txt")
+    entries = parseInput()
     res = entries.map(entry => {
       decodeOutput(entry._1, entry._2)
     }).sum

@@ -1,7 +1,6 @@
 package aoc2021
 
 import scala.collection.mutable
-import scala.io.Source
 
 object Day9 {
 
@@ -79,14 +78,13 @@ object Day9 {
     basins.map(_.size).sorted.reverse.take(3).product
   }
 
-  private def parseInput(filePath: String): Array[Array[Int]] = {
-    Source.fromResource(filePath).getLines().toArray
-      .map(line => line.toCharArray.map(_.asDigit))
+  private def parseInput(isTest: Boolean = false): Array[Array[Int]] = {
+    readDigitsGrid(9, isTest = isTest)
   }
 
   def main(args: Array[String]): Unit = {
-    val heightMapTest: Array[Array[Int]] = parseInput("aoc2021/input_9_test.txt")
-    val heightMap: Array[Array[Int]] = parseInput("aoc2021/input_9.txt")
+    val heightMapTest: Array[Array[Int]] = parseInput(isTest = true)
+    val heightMap: Array[Array[Int]] = parseInput()
 
     println(getRiskLevel(heightMapTest))
     println(getRiskLevel(heightMap))

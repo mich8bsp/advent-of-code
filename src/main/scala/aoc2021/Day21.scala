@@ -1,9 +1,6 @@
 package aoc2021
 
-import scala.io.Source
-
 object Day21 {
-
 
   class DeterministicDie {
     private var value: Int = 0
@@ -52,13 +49,13 @@ object Day21 {
     }
   }
 
-  def parseInput(filePath: String): List[Player] = {
-    Source.fromResource(filePath).getLines().toList.map(line => {
+  def parseInput(isTest: Boolean = false): List[Player] = {
+    readFileLines[Player](21, isTest = isTest) { line =>
       val splitLine = line.split(" ")
       val player = new Player(splitLine(1).toInt)
       player.position = splitLine(4).toInt
       player
-    })
+    }
   }
 
   def playGameDeterministic(players: List[Player], die: DeterministicDie): Int = {
@@ -101,11 +98,11 @@ object Day21 {
   }
 
   def main(args: Array[String]): Unit = {
-    var players = parseInput("aoc2021/input_21.txt")
+    var players = parseInput()
     val die = new DeterministicDie
     println(playGameDeterministic(players, die))
 
-    players = parseInput("aoc2021/input_21.txt")
+    players = parseInput()
     println(playGameQuantum(players.head, players(1)))
   }
 }
