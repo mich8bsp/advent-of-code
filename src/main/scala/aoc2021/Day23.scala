@@ -151,19 +151,19 @@ object Day23 {
   }
 
   def main(args: Array[String]): Unit = {
-    val (boardTest, initPositionsTest) = parseInput("input_2021_23_test.txt")
+    val (boardTest, initPositionsTest) = parseInput("aoc2021/input_23_test.txt")
 
     println(organizeAmphipods(boardTest, initPositionsTest))
 
-    val (board, initPositions) = parseInput("input_2021_23.txt")
+    val (board, initPositions) = parseInput("aoc2021/input_23.txt")
 
     println(organizeAmphipods(board, initPositions))
 
-    val (boardTestUnfolded, initPositionsTestUnfolded) = parseInputUnfolded("input_2021_23_test.txt")
+    val (boardTestUnfolded, initPositionsTestUnfolded) = parseInputUnfolded("aoc2021/input_23_test.txt")
 
     println(organizeAmphipods(boardTestUnfolded, initPositionsTestUnfolded))
 
-    val (boardUnfolded, initPositionsUnfolded) = parseInputUnfolded("input_2021_23.txt")
+    val (boardUnfolded, initPositionsUnfolded) = parseInputUnfolded("aoc2021/input_23.txt")
 
     println(organizeAmphipods(boardUnfolded, initPositionsUnfolded))
   }

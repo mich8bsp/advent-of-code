@@ -84,12 +84,12 @@ object Day20 {
   }
 
   def main(args: Array[String]): Unit = {
-    val (keyTest, imageTest) = parseInput("input_2021_20_test.txt")
+    val (keyTest, imageTest) = parseInput("aoc2021/input_20_test.txt")
 
     val processedImageTest = processImage(image = imageTest, key = keyTest, iterationsToRun = 50)
     println(processedImageTest.values.count(_ == '#'))
 
-    val (key, image) = parseInput("input_2021_20.txt")
+    val (key, image) = parseInput("aoc2021/input_20.txt")
 
     val processedImage = processImage(image = image, key = key, iterationsToRun = 50)
     println(processedImage.values.count(_ == '#'))

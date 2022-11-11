@@ -17,7 +17,7 @@ object Day1 {
   }
 
   def main(args: Array[String]): Unit = {
-    val readings = Source.fromResource("input2021_1.txt").getLines().map(_.toInt).toList
+    val readings = Source.fromResource("aoc2021/input_1.txt").getLines().map(_.toInt).toList
     println(calculateIncreases(readings)) //1342
 
     println(calculateIncreases(groupByThree(readings))) //1378

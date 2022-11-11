@@ -79,13 +79,13 @@ object Day8 {
   }
 
   def part1(): Unit ={
-    var entries = parseInput("input_2021_8_test.txt")
+    var entries = parseInput("aoc2021/input_8_test.txt")
     var res = entries.map(entry => {
       countDigitsOfInterest(entry._1, entry._2, digitsToCount = Set(1,4,7,8))
     }).sum
     println(res)
 
-    entries = parseInput("input_2021_8.txt")
+    entries = parseInput("aoc2021/input_8.txt")
     res = entries.map(entry => {
       countDigitsOfInterest(entry._1, entry._2, digitsToCount = Set(1,4,7,8))
     }).sum
@@ -96,13 +96,13 @@ object Day8 {
   }
 
   def part2(): Unit = {
-    var entries = parseInput("input_2021_8_test.txt")
+    var entries = parseInput("aoc2021/input_8_test.txt")
     var res = entries.map(entry => {
       decodeOutput(entry._1, entry._2)
     }).sum
     println(res)
 
-    entries = parseInput("input_2021_8.txt")
+    entries = parseInput("aoc2021/input_8.txt")
     res = entries.map(entry => {
       decodeOutput(entry._1, entry._2)
     }).sum

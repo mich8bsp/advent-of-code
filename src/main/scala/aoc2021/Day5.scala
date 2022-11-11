@@ -112,7 +112,7 @@ object Day5 {
   }
 
   def main(args: Array[String]): Unit = {
-    val lines: List[Line] = Source.fromResource("input2021_5.txt").getLines().toList
+    val lines: List[Line] = Source.fromResource("aoc2021/input_5.txt").getLines().toList
       .filter(_.nonEmpty)
       .map(x => {
         val Array(startStr, endStr) = x.split("->").map(_.trim)

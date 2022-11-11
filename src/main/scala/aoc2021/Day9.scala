@@ -85,8 +85,8 @@ object Day9 {
   }
 
   def main(args: Array[String]): Unit = {
-    val heightMapTest: Array[Array[Int]] = parseInput("input_2021_9_test.txt")
-    val heightMap: Array[Array[Int]] = parseInput("input_2021_9.txt")
+    val heightMapTest: Array[Array[Int]] = parseInput("aoc2021/input_9_test.txt")
+    val heightMap: Array[Array[Int]] = parseInput("aoc2021/input_9.txt")
 
     println(getRiskLevel(heightMapTest))
     println(getRiskLevel(heightMap))

@@ -28,7 +28,7 @@ object Day2 {
   }
 
   def main(args: Array[String]): Unit = {
-    val commands = Source.fromResource("input2021_2.txt").getLines().toList
+    val commands = Source.fromResource("aoc2021/input_2.txt").getLines().toList
       .map(line => {
         val Array(dirStr, stepsStr) = line.split(" ")
         Command(

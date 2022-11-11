@@ -62,11 +62,11 @@ object Day13 {
   }
 
   def main(args: Array[String]): Unit = {
-    val (pointsTest, operationsTest) = parseInput("input_2021_13_test.txt")
+    val (pointsTest, operationsTest) = parseInput("aoc2021/input_13_test.txt")
 
     println(foldOrigami(pointsTest, operationsTest.take(1)).size)
 
-    val (points, operations) = parseInput("input_2021_13.txt")
+    val (points, operations) = parseInput("aoc2021/input_13.txt")
 
     println(foldOrigami(points, operations.take(1)).size)
 

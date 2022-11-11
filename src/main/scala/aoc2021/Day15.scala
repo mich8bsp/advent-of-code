@@ -65,11 +65,11 @@ object Day15 {
   }
 
   def main(args: Array[String]): Unit = {
-    val testGrid = parseInput("input_2021_15_test.txt")
+    val testGrid = parseInput("aoc2021/input_15_test.txt")
 
     println(findLowestTotalRisk(testGrid)) // 40
 
-    val grid = parseInput("input_2021_15.txt")
+    val grid = parseInput("aoc2021/input_15.txt")
 
     println(findLowestTotalRisk(grid)) // 415
 

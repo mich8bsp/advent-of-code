@@ -51,10 +51,10 @@ object Day17 {
   }
 
   def main(args: Array[String]): Unit = {
-    val (xRangeTest, yRangeTest) = parseInput("input_2021_17_test.txt")
+    val (xRangeTest, yRangeTest) = parseInput("aoc2021/input_17_test.txt")
     println(getMaxAmplitudeOfShotToTarget((xRangeTest, yRangeTest))) //45
 
-    val (xRange, yRange) = parseInput("input_2021_17.txt")
+    val (xRange, yRange) = parseInput("aoc2021/input_17.txt")
     println(getMaxAmplitudeOfShotToTarget((xRange, yRange))) //5671
 
     println(getValidInitialVelocities((xRangeTest, yRangeTest)).size) //112

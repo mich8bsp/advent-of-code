@@ -101,11 +101,11 @@ object Day21 {
   }
 
   def main(args: Array[String]): Unit = {
-    var players = parseInput("input_2021_21.txt")
+    var players = parseInput("aoc2021/input_21.txt")
     val die = new DeterministicDie
     println(playGameDeterministic(players, die))
 
-    players = parseInput("input_2021_21.txt")
+    players = parseInput("aoc2021/input_21.txt")
     println(playGameQuantum(players.head, players(1)))
   }
 }

@@ -56,7 +56,7 @@ object Day4 {
   }
 
   def main(args: Array[String]): Unit = {
-    val inputLines = Source.fromResource("input2021_4.txt").getLines().toList
+    val inputLines = Source.fromResource("aoc2021/input_4.txt").getLines().toList
 
     val currentBoardLines: mutable.Buffer[String] = mutable.Buffer[String]()
     val bingoNumbers: List[Int] = inputLines.head.split(",").map(_.toInt).toList

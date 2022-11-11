@@ -159,7 +159,7 @@ object Day16 {
 
 
   def main(args: Array[String]): Unit = {
-    val transmissions = parseInput("input_2021_16.txt")
+    val transmissions = parseInput("aoc2021/input_16.txt")
 
     transmissions.foreach(transmission => {
       println(countTransmissionVersions(parseTransmission(transmission)))

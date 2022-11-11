@@ -121,7 +121,7 @@ object Day22 {
 
 
   def main(args: Array[String]): Unit = {
-    val stepsTest = parseInput("input_2021_22_test.txt")
+    val stepsTest = parseInput("aoc2021/input_22_test.txt")
     val initializationArea = (-50, 50)
 
     val stepsTestInInitialization = stepsTest.filter(x =>
@@ -132,7 +132,7 @@ object Day22 {
     println(countOnCubesAfterSteps(stepsTestInInitialization)) //474140
     println(countOnCubesAfterSteps(stepsTest)) //2758514936282235
 
-    val steps = parseInput("input_2021_22.txt")
+    val steps = parseInput("aoc2021/input_22.txt")
 
     val stepsInInitialization = steps.filter(x =>
       findSegmentsIntersection(x._1, initializationArea).nonEmpty &&

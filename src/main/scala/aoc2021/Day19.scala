@@ -179,12 +179,12 @@ object Day19 {
   }
 
   def main(args: Array[String]): Unit = {
-    val scannersTest: List[Scanner] = parseInput("input_2021_19_test.txt")
+    val scannersTest: List[Scanner] = parseInput("aoc2021/input_19_test.txt")
     resolveScannerLocations(scannersTest)
     println(scannersTest.flatMap(_.getAbsoluteCoordinateReports).toSet.size)
     println(getMaxManhattanDistance(scannersTest))
 
-    val scanners: List[Scanner] = parseInput("input_2021_19.txt")
+    val scanners: List[Scanner] = parseInput("aoc2021/input_19.txt")
     resolveScannerLocations(scanners)
     println(scanners.flatMap(_.getAbsoluteCoordinateReports).toSet.size)
     println(getMaxManhattanDistance(scanners))

@@ -30,7 +30,7 @@ object Day6 {
 
 
   def main(args: Array[String]): Unit = {
-    val initialTimers: List[Int] = Source.fromResource("input_2021_6.txt").getLines()
+    val initialTimers: List[Int] = Source.fromResource("aoc2021/input_6.txt").getLines()
       .mkString.split(",").map(_.toInt).toList
 
     println(simulateLanternfish(initialTimers, 256))

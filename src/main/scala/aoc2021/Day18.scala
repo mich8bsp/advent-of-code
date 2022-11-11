@@ -227,18 +227,18 @@ object Day18 {
   }
 
   def calculateSumMagnitude(): Unit = {
-    val numbersTest = parseInput("input_2021_18_test.txt")
+    val numbersTest = parseInput("aoc2021/input_18_test.txt")
     println(sumNumbers(numbersTest).magnitude)
 
-    val numbers = parseInput("input_2021_18.txt")
+    val numbers = parseInput("aoc2021/input_18.txt")
     println(sumNumbers(numbers).magnitude)
   }
 
   def calculateLargestPairSumMagnitude(): Unit = {
-    val getNumbersTest = () => parseInput("input_2021_18_test.txt")
+    val getNumbersTest = () => parseInput("aoc2021/input_18_test.txt")
     println(getLargestPairSumMagnitude(getNumbersTest))
 
-    val getNumbers = () => parseInput("input_2021_18.txt")
+    val getNumbers = () => parseInput("aoc2021/input_18.txt")
     println(getLargestPairSumMagnitude(getNumbers))
   }
 

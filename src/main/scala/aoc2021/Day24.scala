@@ -145,7 +145,7 @@ object Day24 {
 
 
   def main(args: Array[String]): Unit = {
-    val monadInstructions: List[String] = Source.fromResource("input_2021_24.txt").getLines().toList
+    val monadInstructions: List[String] = Source.fromResource("aoc2021/input_24.txt").getLines().toList
 
     val monad = new Monad(new ALU, monadInstructions)
 

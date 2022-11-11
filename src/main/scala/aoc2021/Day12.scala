@@ -75,9 +75,9 @@ object Day12 {
   }
 
   def main(args: Array[String]): Unit = {
-    val cavesTest = parseInput("input_2021_12_test.txt")
+    val cavesTest = parseInput("aoc2021/input_12_test.txt")
     println(countCavePaths(cavesTest))
-    val caves = parseInput("input_2021_12.txt")
+    val caves = parseInput("aoc2021/input_12.txt")
     println(countCavePaths(caves))
 
     println(countCavePaths2(cavesTest))

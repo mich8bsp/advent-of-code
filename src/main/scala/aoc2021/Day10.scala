@@ -71,10 +71,10 @@ object Day10 {
   }
 
   def main(args: Array[String]): Unit = {
-    val testLines = Source.fromResource("input_2021_10_test.txt").getLines().toList
+    val testLines = Source.fromResource("aoc2021/input_10_test.txt").getLines().toList
     println(getSyntaxErrorScore(testLines))
 
-    val lines = Source.fromResource("input_2021_10.txt").getLines().toList
+    val lines = Source.fromResource("aoc2021/input_10.txt").getLines().toList
 
     println(getSyntaxErrorScore(lines))
 

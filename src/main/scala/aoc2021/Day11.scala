@@ -92,15 +92,15 @@ object Day11 {
   }
 
   def main(args: Array[String]): Unit = {
-    var testGrid = parseInput(Source.fromResource("input_2021_11_test.txt").getLines().toList)
+    var testGrid = parseInput(Source.fromResource("aoc2021/input_11_test.txt").getLines().toList)
     println(getNumberOfFlashes(testGrid, steps = 100))
 
-    var grid = parseInput(Source.fromResource("input_2021_11.txt").getLines().toList)
+    var grid = parseInput(Source.fromResource("aoc2021/input_11.txt").getLines().toList)
 
     println(getNumberOfFlashes(grid, steps = 100))
 
-    testGrid = parseInput(Source.fromResource("input_2021_11_test.txt").getLines().toList)
-    grid = parseInput(Source.fromResource("input_2021_11.txt").getLines().toList)
+    testGrid = parseInput(Source.fromResource("aoc2021/input_11_test.txt").getLines().toList)
+    grid = parseInput(Source.fromResource("aoc2021/input_11.txt").getLines().toList)
 
     println(getFirstSynchronizedStep(testGrid))
     println(getFirstSynchronizedStep(grid))

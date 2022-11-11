@@ -74,9 +74,9 @@ object Day25 {
   }
 
   def main(args: Array[String]): Unit = {
-    val gridTest = parseInput("input_2021_25_test.txt")
+    val gridTest = parseInput("aoc2021/input_25_test.txt")
     println(simulate(gridTest))
-    val grid = parseInput("input_2021_25.txt")
+    val grid = parseInput("aoc2021/input_25.txt")
     println(simulate(grid))
   }
 }
