@@ -14,6 +14,10 @@ object Utils {
     override def parse(line: String): Double = line.toDouble
   }
 
+  implicit object LongParser extends LineParser[Long] {
+    override def parse(line: String): Long = line.toLong
+  }
+
   implicit object StringParser extends LineParser[String] {
     override def parse(line: String): String = line
   }
