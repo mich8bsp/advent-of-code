@@ -15,4 +15,9 @@ package object aoc2020 {
   def readDigitsGrid(day: Int, isTest: Boolean = false): Array[Array[Int]] = {
     Utils.readDigitsGrid(YEAR, day, isTest)
   }
+
+  def readSections[T](day: Int, isTest: Boolean = false)
+                  (implicit parser: SectionParser[T]): List[T] = {
+    Utils.readSections[T](YEAR, day, isTest)
+  }
 }

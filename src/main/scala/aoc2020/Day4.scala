@@ -1,32 +1,18 @@
 package aoc2020
 
-import scala.collection.mutable
 import scala.util.Try
 
 object Day4 {
   val mandatoryPassportFields = Set("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
   case class Passport(fields: Map[String, String])
 
-  def parsePassports(lines: List[String]): List[Passport] = {
-    def parsePassport(passportLines: List[String]): Passport = {
-      Passport(passportLines.flatMap(_.split(" "))
+  def parsePassports: List[Passport] = {
+    readSections[Passport](4) { lines =>
+      Passport(lines.flatMap(_.split(" "))
         .filter(_.nonEmpty)
         .map(line => (line.split(":").head, line.split(":")(1)))
         .toMap)
     }
-
-    val passports = mutable.Buffer[Passport]()
-    var linesLeft = lines
-    while (linesLeft.nonEmpty) {
-      val currPassportLines = linesLeft.takeWhile(_.trim.nonEmpty)
-      passports.append(parsePassport(currPassportLines))
-      linesLeft = linesLeft.dropWhile(_.trim.nonEmpty)
-      if (linesLeft.nonEmpty) {
-        linesLeft = linesLeft.tail
-      }
-    }
-
-    passports.toList
   }
 
   def solveA(passports: List[Passport]): Int = {
@@ -59,7 +45,7 @@ object Day4 {
   }
 
   def main(args: Array[String]): Unit = {
-    val passports = parsePassports(readFileLines[String](4))
+    val passports = parsePassports
     println(solveA(passports))
     println(solveB(passports))
   }
