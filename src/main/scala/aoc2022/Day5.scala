@@ -14,8 +14,16 @@ object Day5 {
     stacks.map(_.head).mkString
   }
 
-  def solveB(input: Unit): Int = {
-    ???
+  def solveB(stacks: Array[mutable.Stack[Char]], instructions: List[Instruction]): String = {
+    instructions.foreach { instruction =>
+      val tempStack = mutable.Stack.empty[Char]
+      (0 until instruction.num).foreach { _ =>
+        val c = stacks(instruction.from - 1).pop
+        tempStack.push(c)
+      }
+      stacks(instruction.to - 1).pushAll(tempStack)
+    }
+    stacks.map(_.head).mkString
   }
 
   def parseStacks(inputLines: List[String]): Array[mutable.Stack[Char]] = {
@@ -24,7 +32,7 @@ object Day5 {
       case (x, idx) => idx -> x.toString.toInt
     }.toMap
     val stacks: Array[mutable.Stack[Char]] = Array.fill(stackNumByLineIdx.size)(mutable.Stack.empty[Char])
-    inputLines.tail.foreach(line => {
+    linesRev.tail.foreach(line => {
       stackNumByLineIdx.foreach {
         case (idx, stackNum) =>
           val containerVal = line(idx)
@@ -47,9 +55,8 @@ object Day5 {
 
   def main(args: Array[String]): Unit = {
     val startingStacks :: instructionLines :: Nil = readSections(5) { identity }
-    val stacks: Array[mutable.Stack[Char]] = parseStacks(startingStacks)
     val instructions: List[Instruction] = parseInstructions(instructionLines)
-    println(solveA(stacks, instructions))
-//    solveB(input)
+    println(solveA(parseStacks(startingStacks), instructions))
+    println(solveB(parseStacks(startingStacks), instructions))
   }
 }
