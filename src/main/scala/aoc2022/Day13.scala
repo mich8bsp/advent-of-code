@@ -6,7 +6,9 @@ import scala.util.Try
 object Day13 {
 
   sealed trait Packet
+
   case class IntPacket(x: Int) extends Packet
+
   case class ListPacket(inner: List[Packet]) extends Packet
 
   implicit val packetOrdering: Ordering[Packet] = new Ordering[Packet] {
@@ -29,7 +31,6 @@ object Day13 {
   }
 
 
-
   def parsePacket(str: String): Packet = {
     str.trim match {
       case "[]" => ListPacket(Nil)
@@ -38,25 +39,23 @@ object Day13 {
         var balance = 0
         var elementStartIdx = 0
         val elementsBuffer = mutable.Buffer.empty[Packet]
-        (0 until str.length).foreach { idx =>
-            str(idx) match {
-              case '[' =>
-                if (balance == 0) {
-                  elementStartIdx = idx + 1
-                }
-                balance += 1
-              case ']' =>
-                if (idx == str.length - 1) {
-                  elementsBuffer.append(parsePacket(str.slice(elementStartIdx, idx)))
-                }
-                balance -= 1
-              case _ if idx == str.length - 1 =>
-                elementsBuffer.append(parsePacket(str.slice(elementStartIdx, idx + 1)))
-              case ',' if balance == 0 =>
-                elementsBuffer.append(parsePacket(str.slice(elementStartIdx, idx)))
-                elementStartIdx = idx + 1
-              case _ =>
+        str.zipWithIndex.foreach {
+          case ('[', idx) =>
+            if (balance == 0) {
+              elementStartIdx = idx + 1
             }
+            balance += 1
+          case (']', idx) =>
+            if (idx == str.length - 1) {
+              elementsBuffer.append(parsePacket(str.slice(elementStartIdx, idx)))
+            }
+            balance -= 1
+          case (_, idx) if idx == str.length - 1 =>
+            elementsBuffer.append(parsePacket(str.slice(elementStartIdx, idx + 1)))
+          case (',', idx) if balance == 0 =>
+            elementsBuffer.append(parsePacket(str.slice(elementStartIdx, idx)))
+            elementStartIdx = idx + 1
+          case _ =>
         }
         ListPacket(elementsBuffer.toList)
     }
